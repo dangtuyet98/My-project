@@ -8,67 +8,52 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
-
+public class testActivity extends AppCompatActivity {
     ScrollView scrollView;
     ListView listViewMatch;
     ArrayList<Match> matchArrayList;
     MatchAdapter matchAdapter;
-    Button btnDangTin;
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_test);
+
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         anhxa();
-
-        //su kien chon mot tran dau
         listViewMatch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, ViewMatchActivity.class);
+                // Intent intent = new Intent(MainActivity.this, ViewMatchActivity.class);
+                Intent intent = new Intent(testActivity.this, ViewMatchActivity.class);
                 Match match = matchArrayList.get(position);
                 intent.putExtra("matchIsChosen", match);
                 startActivity(intent);
             }
         });
-
         // dung nay ne :))))
-        //su kien hien nut tim kiem va dang tin khi cuon xuong ( chua lam)
         scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 System.out.println(scrollX+" "+scrollY);
                 if(scrollY==300){
-                    //hien button, an tim kiem va dang tin
+                    //hien button
                 }
-            }
-        });
-
-        //su kien chon nut dang tin
-        btnDangTin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 
     }
     private void anhxa(){
-        scrollView = (ScrollView) findViewById(R.id.scrollView);
-        btnDangTin = (Button) findViewById(R.id.btnDangtin);
         listViewMatch = (ListView) findViewById(R.id.listViewMatch);
 
         matchArrayList = new ArrayList<>();
@@ -86,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setListViewHeightBasedOnChildren(MatchAdapter matchAdapter, ListView listView) {
-
         if (matchAdapter == null) {
             return;
         }
+
         int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
         int totalHeight = 0;
         View view = null;
@@ -106,3 +91,5 @@ public class MainActivity extends AppCompatActivity {
         listView.setLayoutParams(params);
     }
 }
+
+
